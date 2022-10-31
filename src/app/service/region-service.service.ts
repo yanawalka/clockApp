@@ -13,8 +13,8 @@ export class RegionService {
     return this.cliente.get<any>(url);
   }
 
-  getCountryTime() {
-    const url = 'https://timeapi.io/api/TimeZone/zone?timeZone=America/Argentina/Buenos_Aires';
+  getCountryTime(country: string) {
+    const url = 'https://timeapi.io/api/TimeZone/zone?timeZone='+country;
     return this.cliente.get<any>(url);
   }
 

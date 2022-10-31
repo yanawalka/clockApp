@@ -1,0 +1,12 @@
+.chronometerContainer {
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+    align-items: center;
+    width: 120px;
+}
+
+.clock {
+    font-size: 100px;
+    color: gray;
+}
