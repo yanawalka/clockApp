@@ -1,16 +1,23 @@
 <div class="chronometerContainer">
-    <span *ngIf="!pipi">Aguantiaaaaaaaaaa</span>
-    <span *ngIf="pipi" class="clock">{{clock}}</span>
-    <select #teams (change)="regionSet(teams.value)">
-        <option *ngFor="let countrie of countries" value="{{countrie}}">{{countrie}}</option>
-    </select>
 
-    <div> <span>Setear alarma recurrente cada </span> <input type="number" [(ngModel)]="recurrentActionSetted"> <span> minutos.</span></div>
+    <svg *ngIf="!pipi" class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+        <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+     </svg>
+     <span *ngIf="pipi" class="clock">{{clock}}</span>
 
-    <div class="alarms">
-        <input type="datetime-local" [(ngModel)]="alarm">
-        <button (click)="setAlarm()" [disabled]="alarm == 0 ">Set Alarm</button>
+    <div class="alignPlugins">
+
+        <select #teams (change)="regionSet(teams.value)">
+            <option *ngFor="let countrie of countries" value="{{countrie}}">{{countrie}}</option>
+        </select>
+
+        <div class="recurrent"> <span>Setear alarma recurrente cada </span> <input type="number" [(ngModel)]="recurrentActionSetted"> <span> minutos.</span></div>
+
+        <div class="alarms">
+            <input type="datetime-local" [(ngModel)]="alarm">
+            <button (click)="setAlarm()" [disabled]="alarm == 0 ">Set Alarm</button>
+        </div>
+
+        <div *ngFor="let scheduledAlarm of scheduledAlarms">{{scheduledAlarm.completeDate}}</div>
     </div>
-
-    <div *ngFor="let scheduledAlarm of scheduledAlarms">{{scheduledAlarm.completeDate}}</div>
 </div>

@@ -52,8 +52,8 @@ export class ClockComponent implements OnInit {
   regionSet(ev: string) {
     this.pipi = false;
     this.regionService.getCountryTime(ev).subscribe((res) => {
-      this.pipi = true;
-       this.countryMilliseconds = (new Date(res.currentLocalTime)).getTime();
+      setTimeout(() => {this.pipi = true;}, 1000);
+      this.countryMilliseconds = (new Date(res.currentLocalTime)).getTime();
     })
   }
 
