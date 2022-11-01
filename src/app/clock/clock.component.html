@@ -13,6 +13,14 @@
 
         <div class="recurrent"> <span>Setear alarma recurrente cada </span> <input type="number" [(ngModel)]="recurrentActionSetted"> <span> minutos.</span></div>
 
+        <div class="chooseAlarm">Choose alar 
+            <select #choose (change)="regionSet(teams.value)">
+                <!-- <option *ngFor="let item of list">
+
+                </option> -->
+            </select>
+        </div>
+
         <div class="alarms">
             <input type="datetime-local" [(ngModel)]="alarm">
             <button (click)="setAlarm()" [disabled]="alarm == 0 ">Set Alarm</button>
