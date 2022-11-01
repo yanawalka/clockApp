@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { RegionService } from 'src/app/service/region-service.service';
+import { RegionService } from 'src/service/region-service.service';
 
 @Component({
-  selector: 'app-clock',
+  selector: '[app-clock]',
   templateUrl: './clock.component.html',
   styleUrls: ['./clock.component.scss']
 })
 export class ClockComponent implements OnInit {
+
+  pipi = true;
 
   clock: string = '';
   countries: string[] = [];
@@ -48,7 +50,9 @@ export class ClockComponent implements OnInit {
   }
 
   regionSet(ev: string) {
+    this.pipi = false;
     this.regionService.getCountryTime(ev).subscribe((res) => {
+      this.pipi = true;
        this.countryMilliseconds = (new Date(res.currentLocalTime)).getTime();
     })
   }

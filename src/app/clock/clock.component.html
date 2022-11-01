@@ -1,5 +1,6 @@
 <div class="chronometerContainer">
-    <span class="clock">{{clock}}</span>
+    <span *ngIf="!pipi">Aguantiaaaaaaaaaa</span>
+    <span *ngIf="pipi" class="clock">{{clock}}</span>
     <select #teams (change)="regionSet(teams.value)">
         <option *ngFor="let countrie of countries" value="{{countrie}}">{{countrie}}</option>
     </select>
@@ -8,10 +9,6 @@
 
     <div class="alarms">
         <input type="datetime-local" [(ngModel)]="alarm">
-        <!-- 
-        <input type="text" placeholder="Minutes" [(ngModel)]="alarm.minute">
-        <input type="text" placeholder="Seconds" [(ngModel)]="alarm.second"> 
-        -->
         <button (click)="setAlarm()" [disabled]="alarm == 0 ">Set Alarm</button>
     </div>
 

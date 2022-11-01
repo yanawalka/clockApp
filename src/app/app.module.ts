@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { ClockComponent } from './components/clock/clock.component';
+import { ClockComponent } from './clock/clock.component';
 
 @NgModule({
   declarations: [

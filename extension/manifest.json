@@ -1,0 +1,17 @@
+{
+    "manifest_version": 3,
+    "name": "clockApp",
+    "description": "Healthy practice app",
+    "version": "1.0",
+
+    "icons": {
+        "16": "tree.jpeg",
+        "48": "tree.jpeg",
+        "128": "tree.jpeg"
+    },
+
+    "content_scripts": [{
+        "matches": ["http://www.google.com/*"],
+        "css":["main.css"]
+    }]
+  }
