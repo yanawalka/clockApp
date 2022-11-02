@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlarmMultimediaService } from 'src/app/service/alarm-multimedia.service';
 import { RecurrentAlarmService } from 'src/app/service/recurrent-alarm.service';
 
 @Component({
@@ -13,7 +14,10 @@ export class RecurrentAlarmComponent implements OnInit {
   recurrentAction: number = 0;
   recurrentActionMinute: number = 0;
 
-  constructor( private recurrentAlarmService: RecurrentAlarmService ) { }
+  constructor( 
+    private recurrentAlarmService: RecurrentAlarmService,
+    private alarmMultimediaService: AlarmMultimediaService
+     ) { }
 
   ngOnInit(): void {
     this.recurrentAlarmService.recurrentValidation.subscribe( () => {
@@ -32,8 +36,8 @@ export class RecurrentAlarmComponent implements OnInit {
       if(this.recurrentActionMinute >= this.recurrentActionSetted) {
         this.recurrentActionMinute = 0;
         console.log("deberia sonar la alarma")
-        // const audio = new Audio(this.alarmMultimediaObj());
-        // audio.play();
+        const audio = new Audio(this.alarmMultimediaService.alarmMultimediaObj());
+        audio.play();
       }
     }
   }

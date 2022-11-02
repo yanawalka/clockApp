@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlarmMultimediaService } from 'src/app/service/alarm-multimedia.service';
 import { RecurrentAlarmService } from 'src/app/service/recurrent-alarm.service';
 import { AlarmSounds } from '../../../enum/alarmSoundsEnum';
 import { AlarmMultimediaInterface } from '../../../interface/alarmMultimedia.interface';
@@ -20,12 +21,13 @@ export class ClockComponent implements OnInit {
   scheduledAlarms: any[] = [];
   alarm: number = 16872486541120;
 
-  alarmMultimedia: AlarmMultimediaInterface[] = Object.values(AlarmSounds);
+  alarmMultimedia: any;
 
   constructor( 
     private regionService: RegionService,
-    private recurrentAlarmService: RecurrentAlarmService ) 
-  { }
+    private recurrentAlarmService: RecurrentAlarmService,
+    private alarmMultimediaService: AlarmMultimediaService ) 
+  {   this.alarmMultimedia = alarmMultimediaService.alarmMultimedia;}
 
   ngOnInit(): void {
     this.startClock();
@@ -37,8 +39,6 @@ export class ClockComponent implements OnInit {
   }
   
   startClock():void {
-    // let recurrentAction = 0;
-    // let recurrentActionMinute = 0;
     setInterval(() => {
       this.countryMilliseconds += 1000;
       let clockDate = new Date(this.countryMilliseconds);
@@ -49,10 +49,6 @@ export class ClockComponent implements OnInit {
       this.compareAlarms( this.countryMilliseconds );
 
       this.recurrentAlarmService.recurrentValidation.next('');
-
-      // let recurrentValidation = this.recurrentAlarm(recurrentAction, recurrentActionMinute);
-      // recurrentAction = recurrentValidation.recurrentAction;
-      // recurrentActionMinute = recurrentValidation.recurrentActionMinute;
 
     }, 1000);
   }
@@ -69,7 +65,7 @@ export class ClockComponent implements OnInit {
     this.scheduledAlarms.forEach((element, index) => {
       if(alarmDate >= element.millisec) {
         element.millisec = 16872486541120;
-        const audio = new Audio(this.alarmMultimediaObj());
+        const audio = new Audio(this.alarmMultimediaService.alarmMultimediaObj());
         audio.play();
         this.scheduledAlarms.splice(index, 1);
       }
@@ -82,13 +78,8 @@ export class ClockComponent implements OnInit {
     this.scheduledAlarms.push(alarm);
   }
 
-  setAlarmSound(ev: any) {
-    this.alarmMultimedia.forEach(element => element.seted = false );
-    this.alarmMultimedia[ev].seted = true;
-  }
-
-  alarmMultimediaObj(): string {
-    return this.alarmMultimedia.find(element => element.seted === true)?.url??"";
+  setAlarmSound(ev: any){
+    this.alarmMultimediaService.setAlarmSound(ev);
   }
 
 }
