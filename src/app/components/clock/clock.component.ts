@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlarmMultimediaService } from 'src/app/service/alarm-multimedia.service';
 import { RecurrentAlarmService } from 'src/app/service/recurrent-alarm.service';
-import { AlarmSounds } from '../../../enum/alarmSoundsEnum';
-import { AlarmMultimediaInterface } from '../../../interface/alarmMultimedia.interface';
 import { RegionService } from '../../service/region-service.service';
 
 @Component({
