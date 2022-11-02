@@ -12,4 +12,11 @@ export class AlarmSounds {
         image: '../../../assets/multimedia/turtleOp.png',
         seted: false
     };
+
+    static Dolphin = {
+        name: 'Delfin',
+        url: '../../../assets/multimedia/delfin.mp3',
+        image: '../../../assets/multimedia/turtleOp.png',
+        seted: false
+    };
 }

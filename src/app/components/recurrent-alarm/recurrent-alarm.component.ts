@@ -21,7 +21,6 @@ export class RecurrentAlarmComponent implements OnInit {
 
   ngOnInit(): void {
     this.recurrentAlarmService.recurrentValidation.subscribe( () => {
-      console.log("Entro a vagancia")
       this.recurrentAlarm();
     })
   }
@@ -35,7 +34,6 @@ export class RecurrentAlarmComponent implements OnInit {
       }
       if(this.recurrentActionMinute >= this.recurrentActionSetted) {
         this.recurrentActionMinute = 0;
-        console.log("deberia sonar la alarma")
         const audio = new Audio(this.alarmMultimediaService.alarmMultimediaObj());
         audio.play();
       }
