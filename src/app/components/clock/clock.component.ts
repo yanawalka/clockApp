@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { RegionService } from 'src/service/region-service.service';
+import { RecurrentAlarmService } from 'src/app/service/recurrent-alarm.service';
+import { AlarmSounds } from '../../../enum/alarmSoundsEnum';
+import { AlarmMultimediaInterface } from '../../../interface/alarmMultimedia.interface';
+import { RegionService } from '../../service/region-service.service';
 
 @Component({
   selector: '[app-clock]',
@@ -8,7 +11,7 @@ import { RegionService } from 'src/service/region-service.service';
 })
 export class ClockComponent implements OnInit {
 
-  pipi = true;
+  loading = true;
 
   clock: string = '';
   countries: string[] = [];
@@ -17,9 +20,12 @@ export class ClockComponent implements OnInit {
   scheduledAlarms: any[] = [];
   alarm: number = 16872486541120;
 
-  recurrentActionSetted: number = 0;
+  alarmMultimedia: AlarmMultimediaInterface[] = Object.values(AlarmSounds);
 
-  constructor( private regionService: RegionService ) { }
+  constructor( 
+    private regionService: RegionService,
+    private recurrentAlarmService: RecurrentAlarmService ) 
+  { }
 
   ngOnInit(): void {
     this.startClock();
@@ -31,8 +37,8 @@ export class ClockComponent implements OnInit {
   }
   
   startClock():void {
-    let recurrentAction = 0;
-    let recurrentActionMinute = 0;
+    // let recurrentAction = 0;
+    // let recurrentActionMinute = 0;
     setInterval(() => {
       this.countryMilliseconds += 1000;
       let clockDate = new Date(this.countryMilliseconds);
@@ -42,27 +48,30 @@ export class ClockComponent implements OnInit {
       this.clock = `${hours}:${minutes}:${seconds}`;
       this.compareAlarms( this.countryMilliseconds );
 
-      let recurrentValidation = this.recurrentAlarm(recurrentAction, recurrentActionMinute);
-      recurrentAction = recurrentValidation.recurrentAction;
-      recurrentActionMinute = recurrentValidation.recurrentActionMinute;
+      this.recurrentAlarmService.recurrentValidation.next('');
+
+      // let recurrentValidation = this.recurrentAlarm(recurrentAction, recurrentActionMinute);
+      // recurrentAction = recurrentValidation.recurrentAction;
+      // recurrentActionMinute = recurrentValidation.recurrentActionMinute;
 
     }, 1000);
   }
 
   regionSet(ev: string) {
-    this.pipi = false;
+    this.loading = false;
     this.regionService.getCountryTime(ev).subscribe((res) => {
-      setTimeout(() => {this.pipi = true;}, 1000);
+      setTimeout(() => {this.loading = true;}, 1000);
       this.countryMilliseconds = (new Date(res.currentLocalTime)).getTime();
     })
   }
 
   compareAlarms( alarmDate: number ) {
-    this.scheduledAlarms.forEach(element => {
+    this.scheduledAlarms.forEach((element, index) => {
       if(alarmDate >= element.millisec) {
         element.millisec = 16872486541120;
-        const audio = new Audio("../../../assets/multimedia/tortuga.mp3");
+        const audio = new Audio(this.alarmMultimediaObj());
         audio.play();
+        this.scheduledAlarms.splice(index, 1);
       }
     });
   }
@@ -73,19 +82,13 @@ export class ClockComponent implements OnInit {
     this.scheduledAlarms.push(alarm);
   }
 
-  recurrentAlarm(recurrentAction: any, recurrentActionMinute: any) {
-    if(this.recurrentActionSetted !== 0){
-      recurrentAction += 1;
-      if (recurrentAction === 60) {
-        recurrentAction = 0;
-        recurrentActionMinute =+ 1;
-      }
-      if(recurrentActionMinute >= this.recurrentActionSetted) {
-        recurrentActionMinute = 0;
-        const audio = new Audio("../../../assets/multimedia/tortuga.mp3");
-        audio.play();
-      }
-    }
-    return {recurrentAction, recurrentActionMinute}
+  setAlarmSound(ev: any) {
+    this.alarmMultimedia.forEach(element => element.seted = false );
+    this.alarmMultimedia[ev].seted = true;
   }
+
+  alarmMultimediaObj(): string {
+    return this.alarmMultimedia.find(element => element.seted === true)?.url??"";
+  }
+
 }

@@ -1,9 +1,9 @@
 <div class="chronometerContainer">
 
-    <svg *ngIf="!pipi" class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+    <svg *ngIf="!loading" class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
         <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
      </svg>
-     <span *ngIf="pipi" class="clock">{{clock}}</span>
+     <span *ngIf="loading" class="clock">{{clock}}</span>
 
     <div class="alignPlugins">
 
@@ -11,13 +11,11 @@
             <option *ngFor="let countrie of countries" value="{{countrie}}">{{countrie}}</option>
         </select>
 
-        <div class="recurrent"> <span>Setear alarma recurrente cada </span> <input type="number" [(ngModel)]="recurrentActionSetted"> <span> minutos.</span></div>
-
-        <div class="chooseAlarm">Choose alar 
-            <select #choose (change)="regionSet(teams.value)">
-                <!-- <option *ngFor="let item of list">
-
-                </option> -->
+        <div class="chooseAlarm">Choose alarm
+            <select #choose (change)="setAlarmSound(choose.value)">
+                <option *ngFor="let alarmMulti of alarmMultimedia; let i = index" [value]="i">
+                     <span>{{alarmMulti.name}}</span>
+                </option>
             </select>
         </div>
 
@@ -27,5 +25,7 @@
         </div>
 
         <div *ngFor="let scheduledAlarm of scheduledAlarms">{{scheduledAlarm.completeDate}}</div>
+
+        <app-recurrent-alarm></app-recurrent-alarm>
     </div>
 </div>
