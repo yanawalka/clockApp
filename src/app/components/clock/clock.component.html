@@ -6,8 +6,11 @@
      <span *ngIf="loading" class="clock">{{clock}}</span>
 
     <div class="alignPlugins">
+
         <input (keyup)="searchByRegion($event)" placeholder="search by country">
-        <select #teams (change)="regionSet(teams.value)">
+
+        <select #countrie (change)="regionSet(countrie.value)">
+            <option selected></option>
             <option *ngFor="let countrie of countriesFiltered" value="{{countrie}}">{{countrie}}</option>
         </select>
 

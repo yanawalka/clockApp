@@ -55,6 +55,7 @@ export class ClockComponent implements OnInit {
   }
 
   regionSet(ev: string) {
+    console.log('entro a region')
     this.loading = false;
     this.regionService.getCountryTime(ev).subscribe((res) => {
       setTimeout(() => {this.loading = true;}, 1000);
