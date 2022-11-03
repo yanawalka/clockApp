@@ -6,9 +6,9 @@
      <span *ngIf="loading" class="clock">{{clock}}</span>
 
     <div class="alignPlugins">
-
+        <input (keyup)="searchByRegion($event)" placeholder="search by country">
         <select #teams (change)="regionSet(teams.value)">
-            <option *ngFor="let countrie of countries" value="{{countrie}}">{{countrie}}</option>
+            <option *ngFor="let countrie of countriesFiltered" value="{{countrie}}">{{countrie}}</option>
         </select>
 
         <div class="chooseAlarm">Choose alarm
@@ -24,7 +24,7 @@
             <button (click)="setAlarm()" [disabled]="alarm == 0 ">Set Alarm</button>
         </div>
 
-        <div *ngFor="let scheduledAlarm of scheduledAlarms">{{scheduledAlarm.completeDate}}</div>
+        <div *ngFor="let scheduledAlarm of scheduledAlarms; let i = index" (click)="deleteScheduledAlarm(i)"><span>{{scheduledAlarm.completeDate}}</span><span>X</span></div>
 
         <app-recurrent-alarm></app-recurrent-alarm>
     </div>
