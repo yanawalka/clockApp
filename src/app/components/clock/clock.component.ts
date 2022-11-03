@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlarmMultimediaService } from 'src/app/service/alarm-multimedia.service';
 import { RecurrentAlarmService } from 'src/app/service/recurrent-alarm.service';
-import { AlarmSounds } from '../../../enum/alarmSoundsEnum';
-import { AlarmMultimediaInterface } from '../../../interface/alarmMultimedia.interface';
 import { RegionService } from '../../service/region-service.service';
 
 @Component({
@@ -16,6 +14,8 @@ export class ClockComponent implements OnInit {
 
   clock: string = '';
   countries: string[] = [];
+  countriesFiltered: string[] = [];
+
   countryMilliseconds: number = 0;
 
   scheduledAlarms: any[] = [];
@@ -33,6 +33,7 @@ export class ClockComponent implements OnInit {
     this.startClock();
     this.regionService.getTimeZone().subscribe((res) => {
       this.countries = res;
+      this.countriesFiltered = res;
     })
 
     this.regionSet('America/Argentina/Buenos_Aires');
@@ -80,6 +81,28 @@ export class ClockComponent implements OnInit {
 
   setAlarmSound(ev: any){
     this.alarmMultimediaService.setAlarmSound(ev);
+  }
+
+  deleteScheduledAlarm(ev:any){
+    this.scheduledAlarms.splice(ev, 1);
+  }
+
+  searchByRegion(keyEvent: any) {
+    const valor = keyEvent.target.value;
+    console.log(valor)
+    let promises: any = [];
+    let arrLower:any = [];
+
+    this.countries.forEach(element => promises.push(arrLower.push(element.toLowerCase())));
+
+    Promise.all(promises).then(() => {
+      this.countriesFiltered = [];
+      arrLower.find((element:any) => {
+        if (element.includes(valor)) {
+          this.countriesFiltered.push(element);
+        }
+      });
+    });
   }
 
 }

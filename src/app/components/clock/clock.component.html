@@ -7,7 +7,7 @@
 
     <div class="alignPlugins">
 
-        <select #teams (change)="regionSet(teams.value)" class="form-select form-select-sm">
+        <select #teams (change)="regionSet(teams.value)">
             <option *ngFor="let countrie of countries" value="{{countrie}}">{{countrie}}</option>
         </select>
 
@@ -29,7 +29,7 @@
             <button (click)="setAlarm()" [disabled]="alarm == 0 " class="btn btn-success col-sm-3">Set Alarm</button>
         </div>
 
-        <div *ngFor="let scheduledAlarm of scheduledAlarms" class="form-number">{{scheduledAlarm.completeDate}}</div>
+        <div *ngFor="let scheduledAlarm of scheduledAlarms">{{scheduledAlarm.completeDate}}</div>
 
         <app-recurrent-alarm></app-recurrent-alarm>
     </div>
