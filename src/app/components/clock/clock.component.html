@@ -6,25 +6,30 @@
      <span *ngIf="loading" class="clock">{{clock}}</span>
 
     <div class="alignPlugins">
-        <input (keyup)="searchByRegion($event)" placeholder="search by country">
+
         <select #teams (change)="regionSet(teams.value)">
-            <option *ngFor="let countrie of countriesFiltered" value="{{countrie}}">{{countrie}}</option>
+            <option *ngFor="let countrie of countries" value="{{countrie}}">{{countrie}}</option>
         </select>
 
-        <div class="chooseAlarm">Choose alarm
-            <select #choose (change)="setAlarmSound(choose.value)">
-                <option *ngFor="let alarmMulti of alarmMultimedia; let i = index" [value]="i">
-                     <span>{{alarmMulti.name}}</span>
-                </option>
-            </select>
+        <div class="chooseAlarm mb-1 row">
+            <label for="chooseAlarm" class="form-label col-sm-4">Choose alarm</label>
+            <div class="col-sm-8">
+                <select #choose (change)="setAlarmSound(choose.value)" id="chooseAlarm" class="form-select form-select-sm">
+                    <option *ngFor="let alarmMulti of alarmMultimedia; let i = index" [value]="i">
+                         <span>{{alarmMulti.name}}</span>
+                    </option>
+                </select>
+            </div>
         </div>
 
-        <div class="alarms">
-            <input type="datetime-local" [(ngModel)]="alarm">
-            <button (click)="setAlarm()" [disabled]="alarm == 0 ">Set Alarm</button>
+        <div class="alarms mt-1 row mb-1">
+            <div class="col-sm-6">
+                <input type="datetime-local" [(ngModel)]="alarm" class="form-control form-control-sm">
+            </div>
+            <button (click)="setAlarm()" [disabled]="alarm == 0 " class="btn btn-success col-sm-3">Set Alarm</button>
         </div>
 
-        <div *ngFor="let scheduledAlarm of scheduledAlarms; let i = index" (click)="deleteScheduledAlarm(i)"><span>{{scheduledAlarm.completeDate}}</span><span>X</span></div>
+        <div *ngFor="let scheduledAlarm of scheduledAlarms">{{scheduledAlarm.completeDate}}</div>
 
         <app-recurrent-alarm></app-recurrent-alarm>
     </div>
